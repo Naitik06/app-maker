@@ -28,7 +28,7 @@ export function log(message: string, source = "express") {
     second: "2-digit",
     hour12: true,
   });
-  console.log(`${formattedTime} [${source}] ${message}`);
+  console.log(`${formattedTime} [${source}] ${message}`); // ← Fixed this line
 }
 
 app.use((req, res, next) => {
