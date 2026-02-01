@@ -1,0 +1,43 @@
+To get the best result in Replit (especially if using Replit Agent), you need a prompt that defines the **system architecture**, **UI specifics**, and **mathematical logic**.
+
+Copy and paste the prompt below into Replit:
+
+---
+
+### Replit Prompt
+
+"Create a full-stack web application for a competitive math practice interface that mimics the JEE Main examination environment.
+
+**1. Core Functionality:**
+
+* **Question Generator:** Create a JavaScript engine that generates 10 random calculation-based questions per set.
+* **Types:** Addition, Subtraction, Multiplication, Division, 2-variable linear equations (e.g., ), and 3-variable equations.
+* **AI Difficulty Scaling:** Automatically label questions as 'Easy', 'Medium', or 'Hard' based on digit count and operation complexity.
+
+
+* **Virtual Keypad:** Implement a numerical keypad (0-9, decimal, minus, and variables x, y, z) that users must click with a mouse to input answers into a readonly text box.
+
+**2. UI/UX Requirements (CSS):**
+
+* **Header:** Dark theme with a 'Math Challenge' title and a real-time countdown timer in the top right corner.
+* **Main Display:** The calculation must be displayed in the center of the screen using an `<h2>` tag (e.g., ).
+* **Question Palette:** On the right side, show a grid of 10 circles representing question numbers. Color them gray for 'unvisited', blue for 'current', and green for 'answered'.
+* **Footer Navigation:** Include 'Previous', 'Clear Response', and 'Save & Next' buttons.
+
+**3. Features:**
+
+* **Customizable Timer:** Provide a simple settings variable to adjust the total test time.
+* **Result Screen:** Upon clicking 'Submit', display a summary of correct vs. incorrect answers.
+* **Responsiveness:** Ensure the calculator and question area are centered and look professional on desktop screens.
+
+**4. Technical Stack:** Use HTML5, CSS3, and Vanilla JavaScript for a fast, single-page experience."
+
+---
+
+### Pro-Tip for Replit:
+
+If you want Replit to handle the **three-variable equations** specifically, you can add:
+
+> "For 3-variable equations, generate simple integer-solution systems like  so they remain mental-math friendly."
+
+**Would you like me to refine the mathematical logic for the 3-variable equation generator so the answers are always whole numbers?**
