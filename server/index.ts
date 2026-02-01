@@ -1,6 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { createServer } from "http";
+import { createServer } from "node:http";
 import { httpServerHandler } from "cloudflare:node";
 
 const app = express();
@@ -56,22 +56,22 @@ app.use((req, res, next) => {
   next();
 });
 
-// Register routes synchronously or handle the promise properly
+// Register routes
 registerRoutes(httpServer, app).catch((error) => {
   console.error("Failed to register routes:", error);
 });
 
 // Error handler
-app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   const status = err.status || err.statusCode || 500;
   const message = err.message || "Internal Server Error";
   console.error("Internal Server Error:", err);
   
   if (res.headersSent) {
-    return next(err);
+    return _next(err);
   }
   
-  return res.status(status).json({ message });
+  res.status(status).json({ message });
 });
 
 // Export for Cloudflare Workers
