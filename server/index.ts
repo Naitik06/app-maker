@@ -19,7 +19,6 @@ app.use(
     },
   }),
 );
-
 app.use(express.urlencoded({ extended: false }));
 
 export function log(message: string, source = "express") {
@@ -57,25 +56,23 @@ app.use((req, res, next) => {
   next();
 });
 
-// IMPORTANT: Removed the static file serving and Vite setup 
-// Cloudflare Pages handles the frontend, this Worker handles only the API
-(async () => {
-  try {
-    await registerRoutes(httpServer, app);
-  } catch (error) {
-    console.error("Failed to register routes:", error);
-  }
+// Register routes synchronously or handle the promise properly
+registerRoutes(httpServer, app).catch((error) => {
+  console.error("Failed to register routes:", error);
+});
 
-  app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-    console.error("Internal Server Error:", err);
-    if (res.headersSent) {
-      return next(err);
-    }
-    return res.status(status).json({ message });
-  });
-})();
+// Error handler
+app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
+  const status = err.status || err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+  console.error("Internal Server Error:", err);
+  
+  if (res.headersSent) {
+    return next(err);
+  }
+  
+  return res.status(status).json({ message });
+});
 
 // Export for Cloudflare Workers
 export default httpServerHandler(app);
