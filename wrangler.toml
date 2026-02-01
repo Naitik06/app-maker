@@ -1,11 +1,7 @@
 name = "app-maker-backend"
 main = "server/index.ts"
-compatibility_date = "2025-04-01"
+compatibility_date = "2024-09-23"
+compatibility_flags = [ "nodejs_compat" ]
 
 [vars]
 NODE_ENV = "production"
-# DATABASE_URL will be set in the Cloudflare Dashboard for security
-name = "app-maker-backend"
-main = "server/index.ts"
-compatibility_date = "2025-09-23"
-compatibility_flags = [ "nodejs_compat" ]
