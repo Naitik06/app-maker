@@ -1,7 +1,10 @@
 name = "app-maker-backend"
 main = "server/index.ts"
 compatibility_date = "2026-02-01"
-compatibility_flags = [ "nodejs_compat" ]
+compatibility_flags = ["nodejs_compat"]
+
+[build]
+command = ""
 
 [vars]
 NODE_ENV = "production"
