@@ -75,7 +75,6 @@ app.use((req, res, next) => {
   if (process.env.NODE_ENV === "production") {
     serveStatic(app);
   } else {
-    // Vite setup is for local development
     try {
       const { setupVite } = await import("./vite");
       await setupVite(httpServer, app);
@@ -86,5 +85,4 @@ app.use((req, res, next) => {
 })();
 
 // Cloudflare Workers export handler
-// This replaces httpServer.listen() for the cloud environment
 export default httpServerHandler(app);
