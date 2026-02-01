@@ -1,8 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { serveStatic } from "./static";
 import { createServer } from "http";
-import { httpServerHandler } from "cloudflare:node"; // Required for Node compatibility
+import { httpServerHandler } from "cloudflare:node";
 
 const app = express();
 const httpServer = createServer(app);
@@ -58,9 +57,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// Initialize routes and error handling
+// IMPORTANT: Removed the static file serving and Vite setup 
+// Cloudflare Pages handles the frontend, this Worker handles only the API
 (async () => {
-  await registerRoutes(httpServer, app);
+  try {
+    await registerRoutes(httpServer, app);
+  } catch (error) {
+    console.error("Failed to register routes:", error);
+  }
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
@@ -71,18 +75,7 @@ app.use((req, res, next) => {
     }
     return res.status(status).json({ message });
   });
-
-  if (process.env.NODE_ENV === "production") {
-    serveStatic(app);
-  } else {
-    try {
-      const { setupVite } = await import("./vite");
-      await setupVite(httpServer, app);
-    } catch (e) {
-      log("Vite skip: development mode only");
-    }
-  }
 })();
 
-// Cloudflare Workers export handler
+// Export for Cloudflare Workers
 export default httpServerHandler(app);
